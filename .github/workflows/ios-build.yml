@@ -1,11 +1,10 @@
 
-name: Frostbite CI
+name: Frostbite iOS IPA Build
 
 on:
+  workflow_dispatch:
   push:
     branches: [main, master]
-  pull_request:
-  workflow_dispatch:
 
 permissions:
   contents: read
@@ -21,15 +20,36 @@ jobs:
       - name: Install XcodeGen
         run: brew install xcodegen
 
-      - name: Generate Xcode project
+      - name: Generate project
         run: xcodegen generate
 
-      - name: Build Simulator app
+      - name: Build iOS device app
         run: |
           xcodebuild \
             -project Frostbite.xcodeproj \
             -scheme Frostbite \
-            -sdk iphonesimulator \
-            -destination 'generic/platform=iOS Simulator' \
+            -configuration Release \
+            -sdk iphoneos \
+            -destination 'generic/platform=iOS' \
             CODE_SIGNING_ALLOWED=NO \
             build
+
+      - name: Package IPA
+        run: |
+          mkdir -p Payload
+
+          APP_PATH=$(find ~/Library/Developer/Xcode/DerivedData \
+            -path '*/Build/Products/Release-iphoneos/Frostbite.app' \
+            -print -quit)
+
+          test -n "$APP_PATH"
+
+          cp -R "$APP_PATH" Payload/Frostbite.app
+
+          zip -r Frostbite.ipa Payload
+
+      - name: Upload IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: Frostbite-IPA
+          path: Frostbite.ipa
