@@ -8,10 +8,8 @@ struct DashboardView: View {
         switch report.matchesResearchTarget {
         case .some(true):
             return .green
-
         case .some(false):
             return .orange
-
         case .none:
             return .secondary
         }
@@ -21,26 +19,13 @@ struct DashboardView: View {
         NavigationStack {
             List {
                 Section("Detected device") {
-                    valueRow(
-                        "Hardware identifier",
-                        report.machineIdentifier
-                    )
-
-                    valueRow(
-                        "iOS version",
-                        report.systemVersion
-                    )
-
-                    valueRow(
-                        "Build",
-                        report.buildVersion
-                    )
+                    valueRow("Hardware identifier", report.machineIdentifier)
+                    valueRow("iOS version", report.systemVersion)
+                    valueRow("Build", report.buildVersion)
 
                     HStack {
                         Text("Research target")
-
                         Spacer()
-
                         Text(report.researchTargetStatus)
                             .foregroundStyle(researchStatusColor)
                             .fontWeight(.medium)
@@ -55,10 +40,92 @@ struct DashboardView: View {
                     .foregroundStyle(.orange)
 
                     Text(
-                        "This is a research dashboard only. It does not obtain kernel privileges, bypass platform security, inject tweaks, or install a bootstrap."
+                        "Frostbite is currently a research dashboard. It does not obtain kernel privileges, bypass platform security, inject tweaks, or install a bootstrap."
                     )
                     .font(.footnote)
                     .foregroundStyle(.secondary)
+                }
+
+                // MARK: - Sandbox Escape Research
+
+                Section("Sandbox escape research") {
+                    VStack(alignment: .leading, spacing: 10) {
+                        HStack {
+                            Label(
+                                "worse_query",
+                                systemImage: "lock.open"
+                            )
+                            .font(.headline)
+
+                            Spacer()
+
+                            Text("Build supported")
+                                .font(.caption)
+                                .foregroundStyle(.green)
+                        }
+
+                        Text("Erosion")
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+
+                        Text(
+                            "A sandbox escape used by Erosion for iOS customization. It is not a kernel exploit or a full jailbreak."
+                        )
+                        .font(.footnote)
+
+                        Divider()
+
+                        valueRow("Target iOS", "27.3 beta 1")
+                        valueRow("Target build", "24C5037i")
+                        valueRow("Your build", report.buildVersion)
+
+                        HStack {
+                            Text("Build compatibility")
+
+                            Spacer()
+
+                            Text(
+                                report.buildVersion == "24C5037i"
+                                ? "Listed as supported"
+                                : "Not confirmed"
+                            )
+                            .foregroundStyle(
+                                report.buildVersion == "24C5037i"
+                                ? .green : .orange
+                            )
+                        }
+
+                        Text(
+                            "Erosion lists iOS 27.3 beta 1 as supported. Its documentation identifies beta 2 (24C5049d) as patched. This is build-level evidence, not independent testing of every device model."
+                        )
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+
+                        Divider()
+
+                        Link(
+                            destination: URL(
+                                string: "https://github.com/jailbreakdotparty/Erosion"
+                            )!
+                        ) {
+                            Label(
+                                "Erosion source repository",
+                                systemImage: "arrow.up.right.square"
+                            )
+                        }
+
+                        Link(
+                            destination: URL(
+                                string: "https://github.com/forcequitOS/worse_query"
+                            )!
+                        ) {
+                            Label(
+                                "worse_query original PoC",
+                                systemImage: "arrow.up.right.square"
+                            )
+                        }
+                    }
+                    .padding(.vertical, 6)
                 }
 
                 Section("Engineering gates") {
