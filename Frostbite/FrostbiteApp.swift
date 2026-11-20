@@ -1,4 +1,3 @@
-
 import SwiftUI
 
 @main
@@ -18,19 +17,19 @@ struct FrostbiteRootView: View {
     var body: some View {
         TabView {
             DashboardView()
-                .tabItem {
-                    Label("Home", systemImage: "square.grid.2x2")
-                }
+                .tabItem { Label("Home", systemImage: "square.grid.2x2") }
 
             GestaltWorkbenchView()
-                .tabItem {
-                    Label("Gestalt", systemImage: "slider.horizontal.3")
-                }
+                .tabItem { Label("Gestalt", systemImage: "slider.horizontal.3") }
+
+            DynamicIslandStudioView()
+                .tabItem { Label("Island", systemImage: "capsule") }
+
+            LiquidGlassStudioView()
+                .tabItem { Label("Glass", systemImage: "drop") }
 
             BackupView()
-                .tabItem {
-                    Label("Backups", systemImage: "externaldrive")
-                }
+                .tabItem { Label("Backups", systemImage: "externaldrive") }
         }
         .tint(FrostbiteTheme.cyan)
     }
