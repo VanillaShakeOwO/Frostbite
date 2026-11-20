@@ -31,8 +31,7 @@ struct LiquidGlassStudioView: View {
                     VStack(alignment: .leading, spacing: 18) {
                         VStack(alignment: .leading, spacing: 8) {
                             FrostbiteTag(text: "Liquid Glass Studio")
-                            Text("Tune the
-surface.")
+                            Text("Tune the surface.")
                                 .font(.system(size: 32, weight: .bold, design: .rounded))
                                 .foregroundStyle(.white)
                             Text("Explore material, tint, blur and contrast combinations.")
