@@ -20,8 +20,7 @@ struct DynamicIslandStudioView: View {
                     VStack(alignment: .leading, spacing: 18) {
                         VStack(alignment: .leading, spacing: 8) {
                             FrostbiteTag(text: "Dynamic Island Studio")
-                            Text("Position your
-preview.")
+                            Text("Position your preview.")
                                 .font(.system(size: 32, weight: .bold, design: .rounded))
                                 .foregroundStyle(.white)
                             Text("Experiment with X/Y offsets and axis behavior.")
