@@ -8,7 +8,6 @@ struct DeviceReport {
     let systemVersion: String
     let buildVersion: String
 
-    // Reference values only. These are not detected hardware properties.
     private static let targetMachineIdentifier = "iPhone18,5"
     private static let targetSystemVersion = "27.3"
     private static let targetBuildVersion = "24C5037i"
@@ -38,7 +37,6 @@ struct DeviceReport {
         )
     }
 
-    // nil means at least one required value could not be read.
     var matchesResearchTarget: Bool? {
         guard machineIdentifier != "Unavailable",
               buildVersion != "Unavailable",
@@ -55,10 +53,8 @@ struct DeviceReport {
         switch matchesResearchTarget {
         case .some(true):
             return "Exact match"
-
         case .some(false):
             return "Different device/build"
-
         case .none:
             return "Unable to verify"
         }
